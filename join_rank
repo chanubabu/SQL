@@ -1,0 +1,23 @@
+create table mx_adserver_creatives_history as
+
+select a.ad_id,a.creative_id,a.creative_name,a.total_video_duration,b.creative_type
+from
+(
+select * from mx_adserver_creatives_info_updated
+where creative_id not in (
+'mx-abc',
+'mx-xyz',
+'mx-kkk',
+'mx-bbb'
+)
+) a
+left join
+(
+
+select * from
+(select *,row_number() OVER(PARTITION BY creative_id ORDER BY last_updated DESC) Rank
+from mx_adserver_creative_info ) c
+where c.rank = 1 
+
+) b
+on a.creative_id = b.creative_id
