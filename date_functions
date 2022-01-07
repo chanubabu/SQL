@@ -1,0 +1,7 @@
+select 
+current_date,
+to_char(current_date,'YYYYMMDD:HH'),
+sysdate,  
+to_timestamp(sysdate, 'YYYY-MM-DD HH24:MI:SS') as seconds,
+convert_timezone('Asia/Calcutta',sysdate)
+from temp_table limit 1
